@@ -6,5 +6,6 @@ var main = require('./routes/main');
 
 app.use('/', main);
 
-app.listen(3000);
-console.log("Magic happening on port 3000");
+app.listen(3000, function(){
+  console.log("Magic happening on port 3000");
+});
