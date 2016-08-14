@@ -2,6 +2,8 @@ export default {
   users: [
     {
       login: 'leggechr',
+      hasBeenSelected: false,
+      searchUsername: "",
       id: 1,
       meta: {
         avatar_url: "https://avatars3.githubusercontent.com/u/9023149?v=3&s=400",
@@ -29,6 +31,8 @@ export default {
     },
     {
       login: 'octocat',
+      hasBeenSelected: false,
+      searchUsername: "",
       id: 2,
       meta: {
         avatar_url: "https://avatars3.githubusercontent.com/u/113896?v=3&s=400",
