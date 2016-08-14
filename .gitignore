@@ -88,4 +88,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
+*/config
+./backend/config/auth.js
 /node_modules

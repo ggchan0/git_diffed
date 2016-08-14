@@ -3,25 +3,11 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var unirest = require('unirest');
 var pretty_json = require('prettyjson');
+var Q = require('q');
+var config = require ('.././config/auth');
 
 router.get('/', function(req, res) {
-  var promise = new Promise(
-    function (resolve, reject) {
-      var data = get_number_of_issues("ggchan0");
-      setTimeout(function() {
-        resolve(data);
-      }, 5000);
-    }
-  );
-  promise.then(function(data){
-    var obj = {"total_issues" : data};
-    console.log(obj);
-    res.json(obj);
-  })
-  .catch(function(reason){
-    console.log("ERROR");
-    console.log(reason);
-  });
+
 });
 
 router.get('/number_of_issues', function(req, res) {
@@ -45,13 +31,29 @@ router.get('/number_of_followers', function(req, res){
   });
 });
 
+router.get('/commits_by_repo', function(req, res) {
+  //user = req.params.username;
+  user = "ggchan0";
+  unirest.get('https://api.github.com/users/' + user + '/repos')
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response){
+    var returned_obj = {};
+    var repo_list_with_commits = [];
+
+    var get_repo_commit_history_q = Q.denodeify();
+  });
+});
+
 router.get('/commit_messages', function(req, res) {
   //user = req.params.username;
   user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/events")
-  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
   .end(function(response) {
     var data = response.body;
+    console.log(data);
     var push_data = [];
     var commit_count = 0;
     for (var i = 0; i < data.length; i++) {
@@ -71,8 +73,11 @@ router.get('/commit_messages', function(req, res) {
         commit.url = payload.commits[j].url;
         obj.commit_data.push(commit);
       }
+      console.log(obj);
       push_data.push(obj);
     }
+    console.log(commit_count);
+    console.log(push_data);
     returned_obj = {"commit_count" : commit_count, "data" : push_data};
     res.json(returned_obj);
   });
@@ -86,6 +91,9 @@ router.get('/users/:username', function(req, res){
   });
 });
 
+function get_commits_by_repo(user, repo) {
+  
+}
 
 
 module.exports = router;
