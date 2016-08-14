@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var unirest = require('unirest');
 var config = require ('.././config/auth');
 
-router.get('/', function(req, res) {
+router.get('/:username', function(req, res) {
   var user = req.params.username;
   //var user = "ggchan0";
   res.redirect('api/users/' + user);
@@ -22,7 +22,7 @@ router.get('/users/:username', function(req, res){
 });
 
 
-router.get('/issues', function(req, res) {
+router.get('/issues/:username', function(req, res) {
   var user = req.params.username;
   //var user = "leggechr";
   unirest.get("https://api.github.com/search/issues?q=type:issue+author:" + user)
@@ -37,7 +37,7 @@ router.get('/issues', function(req, res) {
   });
 });
 
-router.get('/followers', function(req, res){
+router.get('/followers/:username', function(req, res){
   var user = req.params.username;
   //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/followers")
@@ -52,7 +52,7 @@ router.get('/followers', function(req, res){
   });
 });
 
-router.get('/following', function(req, res) {
+router.get('/following/:username', function(req, res) {
   var user = req.params.username;
   //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/following")
@@ -67,7 +67,7 @@ router.get('/following', function(req, res) {
   });
 });
 
-router.get('/repos', function(req, res) {
+router.get('/repos/:username', function(req, res) {
   var user = req.params.username;
   //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/repos")
@@ -82,7 +82,7 @@ router.get('/repos', function(req, res) {
   });
 });
 
-router.get('/recent_pushes_old', function(req, res) {
+router.get('/recent_pushes_old/:username', function(req, res) {
   var user = req.params.username;
   //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/events")
@@ -127,7 +127,7 @@ function get_events_by_page(page, user) {
   });
 }
 
-router.get('/recent_pushes_new', function(req, res) {
+router.get('/recent_pushes_new/:username', function(req, res) {
   var user = req.params.username;
   //var user = "ggchan0";
 
@@ -176,7 +176,7 @@ router.get('/recent_pushes_new', function(req, res) {
 
 });
 
-router.get('/contribution_to_repo', function(req, res) {
+router.get('/contribution_to_repo/:username/:repo', function(req, res) {
   var user = req.params.username;
   var repo = req.params.repo;
   //var user = "ggchan0";
@@ -206,7 +206,7 @@ router.get('/contribution_to_repo', function(req, res) {
 
 });
 
-router.get('/pull_requests', function(req, res) {
+router.get('/pull_requests/:username', function(req, res) {
   var user = req.params.username;
   //var user = "leggechr";
   unirest.get("https://api.github.com/search/issues?q=type:pr+author:" + user)
@@ -221,7 +221,7 @@ router.get('/pull_requests', function(req, res) {
   });
 });
 
-router.get('/changes_by_week', function(req, res) {
+router.get('/changes_by_week/:username/:repo', function(req, res) {
   var user = req.params.username;
   var repo = req.params.repo;
   //var user = "ggchan0";
@@ -245,7 +245,7 @@ router.get('/changes_by_week', function(req, res) {
 });
 
 
-router.get('/commits_in_repo', function(req, res){
+router.get('/commits_in_repo/:username/:repo', function(req, res){
   var user = req.params.username;
   var repo = req.params.repo;
   //var user = "ggchan0";
