@@ -6,7 +6,7 @@ import * as actions from '../actions/compareActions';
 import CompareForm from '../components/CompareForm';
 import Contributions from '../components/Contributions';
 import VerticalBar from '../components/VerticalBar';
-
+import FinalCodeSnippet from '../components/final_code_snippet';
 
 export const ComparePage = (props) => {
   const {meta1, meta2, contributions1, contributions2, actions} = props;
@@ -19,6 +19,7 @@ export const ComparePage = (props) => {
         actions={actions} />
       <VerticalBar
         height={300} />
+      <FinalCodeSnippet />
     </div>
   );
 };

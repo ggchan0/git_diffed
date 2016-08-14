@@ -1,22 +1,22 @@
-body {
+.final_code_snippet body {
     background-color: #EEEEEE;
 }
 
-span {
+.final_code_snippet span {
     padding-right: 100px;
 }
 
-.header {
+.final_code_snippet .header {
     font-weight: bolder;
 }
 
-img {
-    width=160px;
+.final_code_snippet img {
+    width: 160px;
     height: 160px;
     padding-top: 15px;
 }
 
-.contentright {
+.final_code_snippet .contentright {
     display: block;
     float: left;
     position: relative;
@@ -30,7 +30,7 @@ img {
     font-size: 14pt;
 }
 
-.contentleft {
+.final_code_snippet .contentleft {
     display: block;
     float: left;
     position: relative;
@@ -44,22 +44,22 @@ img {
     font-size: 14pt;
 }
 
-#username {
+.final_code_snippet #username {
     font-size: 11pt;
     color: grey;
 }
 
-.row {
+.final_code_snippet .row {
     background-color: #9A9694;
     border: solid white 10px;
 }
 
-.outer {
+.final_code_snippet .outer {
     margin: 0 auto;
     width: 1300px;
 }
 
-textarea {
+.final_code_snippet textarea {
     text-align: left;
     line-height: 15px;
     border: solid #7FCD66 2px;
@@ -73,7 +73,7 @@ textarea {
 
 }
 
-#comment {
+.final_code_snippet #comment {
     padding-top: 50px;
     border: solid grey 1px;
     border-radius: 13px;
@@ -84,15 +84,15 @@ textarea {
     overflow: scroll;
 }
 
-span {
+.final_code_snippet span {
     padding-right: 200px;
 }
 
-.header {
+.final_code_snippet .header {
     font-weight: bolder;
 }
 
-.tableleft {
+.final_code_snippet .tableleft {
     display: block;
     float: left;
     position: relative;
@@ -107,7 +107,7 @@ span {
     font-size: 15
 }
 
-.tableright {
+.final_code_snippet .tableright {
     display: block;
     float: left;
     position: relative;
@@ -118,4 +118,3 @@ span {
     line-height: 15px;
     font-family: "Avenir"
 }
-Contact GitHub API Training Shop Blog About
