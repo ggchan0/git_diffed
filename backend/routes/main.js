@@ -49,4 +49,12 @@ function get_commits_by_user(user) {
 
 }
 
+router.get('/users/:username', function(req, res){
+  unirest.get("https://api.github.com/users/" + req.params.username)
+  .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
+  .end(function(response) {
+    res.json(response.body);
+  });
+});
+
 module.exports = router;
