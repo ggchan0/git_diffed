@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 var main = require('./routes/main');
 
-app.use('/', main);
+app.use('/api', main);
 
 app.listen(3000, function(){
   console.log("Magic happening on port 3000");

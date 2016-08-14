@@ -2,35 +2,267 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var unirest = require('unirest');
-var pretty_json = require('prettyjson');
-var Q = require('q');
 var config = require ('.././config/auth');
 
 router.get('/', function(req, res) {
-
+  //var user = req.params.username;
+  var user = "ggchan0";
+  res.redirect('api/users/' + user);
 });
 
-router.get('/number_of_issues', function(req, res) {
-  unirest.get("https://api.github.com/search/issues?q=author:" + "ggchan0")
-  .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
+router.get('/users/:username', function(req, res){
+  //var user = req.params.username;
+  var user = "ggchan0";
+  unirest.get("https://api.github.com/users/" + user)
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
   .end(function(response) {
-    var total = response.body.total_count;
-    var obj = {"total_issues" : total};
-    res.json(obj);
+    res.json(response.body);
   });
 });
 
-router.get('/number_of_followers', function(req, res){
-  unirest.get("https://api.github.com/users/" + "ggchan0" + "/followers")
-  .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
+
+router.get('/issues', function(req, res) {
+  //var user = req.params.username
+  var user = "leggechr";
+  unirest.get("https://api.github.com/search/issues?q=type:issue+author:" + user)
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
   .end(function(response) {
-    var total = response.body.length;
-    console.log(total);
-    var obj = {"total_followers" : total};
-    res.json(obj);
+    var data = response.body;
+    var returned_obj = {};
+    returned_obj.total = data.items.length;
+    returned_obj.data = data.items;
+    res.json(returned_obj);
   });
 });
 
+router.get('/followers', function(req, res){
+  //var user = req.params.username
+  var user = "ggchan0";
+  unirest.get("https://api.github.com/users/" + user + "/followers")
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    var data = response.body;
+    var returned_obj;
+    returned_obj.total = data.length;
+    returned_obj.data = data;
+    res.json(returned_obj);
+  });
+});
+
+router.get('/following', function(req, res) {
+  //var user = req.params.username
+  var user = "ggchan0";
+  unirest.get("https://api.github.com/users/" + user + "/following")
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    var data = response.body;
+    var returned_obj = {};
+    returned_obj.total = data.length;
+    returned_obj.data = data;
+    res.json(returned_obj);
+  });
+});
+
+router.get('/repos', function(req, res) {
+  //var user = req.params.username;
+  var user = "ggchan0";
+  unirest.get("https://api.github.com/users/" + user + "/repos")
+  .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    data = response.body;
+    var returned_obj = {};
+    returned_obj.total = data.length;
+    returned_obj.data = data;
+    res.json(returned_obj);
+  });
+});
+
+router.get('/recent_pushes_old', function(req, res) {
+  //var user = req.params.username;
+  var user = "ggchan0";
+  unirest.get("https://api.github.com/users/" + user + "/events")
+  .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    var data = response.body;
+    var push_data = [];
+    var commit_count = 0;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].type != "PushEvent") {
+        continue;
+      }
+      commit_count += data[i].payload.commits.length;
+      push_data.push(data[i]);
+    }
+    returned_obj = {"commit_total" : commit_count, "push_total" : push_data.length, "data" : push_data, };
+    res.json(returned_obj);
+  });
+});
+
+function get_events_by_page(page, user) {
+  unirest.get("https://api.github.com/users/" + user + "/events?page=" + page)
+  .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    var data = response.body;
+    var returned_obj = {};
+    var push_data = [];
+    returned_obj.commit_count = 0;
+    returned_obj.push_count = 0;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].type !== "PushEvent") {
+        continue;
+      }
+      returned_obj.commit_count += data[i].payload.commits.length;
+      push_data.push(data[i]);
+    }
+    returned_obj.push_count += push_data.length;
+    returned_obj.data = push_data;
+    return returned_obj;
+  });
+}
+
+router.get('/recent_pushes_new', function(req, res) {
+  //var user = req.params.username;
+  var user = "ggchan0";
+
+  returned_obj = {};
+  returned_obj.commit_count = 0;
+  returned_obj.push_count = 0;
+  returned_obj.data = [];
+  function get_json_data(page) {
+    return new Promise(function (resolve, reject) {
+      unirest.get("https://api.github.com/users/" + user + "/events?page=" + page)
+      .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
+      .auth({"user" : config.user, "pass" : config.pass})
+      .end(function(response) {
+        var data = response.body;
+        var returned_obj = {};
+        var push_data = [];
+        returned_obj.commit_count = 0;
+        returned_obj.push_count = 0;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].type !== "PushEvent") {
+            continue;
+          }
+          returned_obj.commit_count += data[i].payload.commits.length;
+          push_data.push(data[i]);
+        }
+        returned_obj.push_count += push_data.length;
+        returned_obj.data = push_data;
+        resolve(returned_obj);
+      });
+
+    });
+  }
+
+  for (var i = 1; i <= 5; i++) {
+    var p = get_json_data(i);
+    p.then(function(obj) {
+      returned_obj.commit_count += obj.commit_count;
+      returned_obj.push_count += obj.push_count;
+      returned_obj.data = returned_obj.data.concat(obj.data);
+    });
+  }
+  setTimeout(function(){
+    res.json(returned_obj);
+  }, 2000);
+  //res.json(returned_obj);
+
+});
+
+router.get('/contribution_to_repo', function(req, res) {
+  //var user = req.params.username;
+  //var repo = req.params.repo;
+  var user = "ggchan0";
+  var repo = "git_diffed";
+  unirest.get("https://api.github.com/repos/" + user + "/" + repo + "/stats/contributors")
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response){
+    data = response.body;
+    returned_obj = {};
+    returned_obj.user = user;
+    returned_obj.repo = repo;
+    for (var i = 0; i < data.length; i++) {
+      contributor = data[i];
+      if (contributor.author.login === user) {
+        returned_obj.commit_count = contributor.total;
+        returned_obj.additions = 0;
+        returned_obj.deletions = 0;
+        for (var j = 0; j < contributor.weeks.length; j++) {
+          returned_obj.additions += contributor.weeks[j].a;
+          returned_obj.deletions += contributor.weeks[j].d;
+        }
+      }
+    }
+    res.json(returned_obj);
+  });
+
+});
+
+router.get('/pull_requests', function(req, res) {
+  //var user = req.params.username;
+  var user = "leggechr";
+  unirest.get("https://api.github.com/search/issues?q=type:pr+author:" + user)
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({'user' : config.user, 'pass' : config.pass})
+  .end(function(response) {
+    data = response.body;
+    returned_obj = {};
+    returned_obj.total = data.total_count;
+    returned_obj.data = data.items;
+    res.json(returned_obj);
+  });
+});
+
+router.get('/changes_by_week', function(req, res) {
+  //var user = req.params.username
+  //var repo = req.params.repo
+  var user = "ggchan0";
+  var repo = "git_diffed";
+  unirest.get("https://api.github.com/repos/" + user + "/" + repo + "/stats/code_frequency")
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    data = response.body;
+    returned_obj = [];
+    for (var i = 0; i < data.length; i++) {
+      var stats_per_week = {};
+      stats_per_week.week = i;
+      stats_per_week.additions = data[i][1];
+      stats_per_week.deletions = data[i][2] * -1;
+      console.log(stats_per_week);
+      returned_obj.push(stats_per_week);
+    }
+    res.json(returned_obj);
+  });
+});
+
+
+router.get('/commits_in_repo', function(req, res){
+  //var user = req.params.username
+  //var repo = req.params.repo
+  var user = "ggchan0";
+  var repo = "git_diffed";
+  unirest.get("https://api.github.com/repos/" + user + "/" + repo + "/commits")
+  .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
+  .auth({"user" : config.user, "pass" : config.pass})
+  .end(function(response) {
+    var data = response.body;
+    var returned_obj = {};
+    returned_obj.total = data.length;
+    returned_obj.data = data;
+    res.json(returned_obj);
+  });
+});
+
+/*
 router.get('/commits_by_repo', function(req, res) {
   //user = req.params.username;
   user = "ggchan0";
@@ -38,85 +270,49 @@ router.get('/commits_by_repo', function(req, res) {
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
   .end(function(response){
-    var returned_obj = {};
-    var repo_list_with_commits = [];
-
-    var get_repo_commit_history_q = Q.denodeify();
-  });
-});
-
-router.get('/commit_messages', function(req, res) {
-  //user = req.params.username;
-  user = "ggchan0";
-  unirest.get("https://api.github.com/users/" + user + "/events")
-  .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
-  .auth({"user" : config.user, "pass" : config.pass})
-  .end(function(response) {
-    var data = response.body;
-    console.log(data);
-    var push_data = [];
-    var commit_count = 0;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].type != "PushEvent") {
-        continue;
-      }
-      var obj = {};
-      obj.action = "push";
-      obj.created_time = data[i].created_at;
-      obj.commit_data = [];
-      var payload = data[i].payload;
-      commit_count += payload.commits.length;
-      for (var j = 0; j < payload.commits.length; j++) {
-        var commit = {};
-        commit.sha = payload.commits[j].sha;
-        commit.message = payload.commits[j].message;
-        commit.url = payload.commits[j].url;
-        obj.commit_data.push(commit);
-      }
-      console.log(obj);
-      push_data.push(obj);
+    var repo_response_data = response.body;
+    var all_repo_data = [];
+    for (var i = 0; i < repo_response_data.length; i++) {
+      var repo_data = {};
+      repo_data.id = repo_response_data[i].id;
+      repo_data.name = repo_response_data[i].name;
+      repo_data.url = repo_response_data[i].url;
+      repo_data.created_time = repo_response_data[i].created_at;
+      all_repo_data.push(repo_data);
     }
-    console.log(commit_count);
-    console.log(push_data);
-    returned_obj = {"commit_count" : commit_count, "data" : push_data};
-    res.json(returned_obj);
-  });
-});
+    var all_repo_commit_history = [];
 
-router.get('/users/:username', function(req, res){
-  unirest.get("https://api.github.com/users/" + req.params.username)
-  .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
-  .end(function(response) {
-    res.json(response.body);
-  });
-});
+    var repo_history = function(user, repo) {
+      var repo_history_promise = new Promise(function(resolve, reject){
+          var returned_obj = get_commits_by_repo(user, repo);
+          resolve(returned_obj);
+      }).catch(function(){
+        console.log("Retrying...");
+      });
+      return repo_history_promise;
+    };
 
-function get_commits_by_repo(user, repo) {
-  
-}
-
-router.get('/users/:username/:repo/commits', function(req, res){
-  unirest.get("https://api.github.com/repos/" + req.params.username + "/" + req.params.repo + "/commits")
-  .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
-  .end(function(response) {
-    var data = response.body;
-    var push_data = [];
-    console.log(data)
-    for (var i = 0; i < data.length; i++) {
-      console.log(data[i].author.login);
-      if (data[i].author.login != req.params.username) {
-        continue;
-      }
-      var obj = {};
-      obj.sha = data[i].sha;
-      obj.commit_date = data[i].commit.author.date;
-      obj.message = data[i].message;
-      obj.url = data[i].url;
-      push_data.push(obj);
+    for (var j = 0; j < all_repo_data.length; j++) {
+      repo_history(user, all_repo_data[j].name).then(function(val) {
+        var temp_obj = {};
+        temp_obj.repo_data = all_repo_data[j];
+        temp_obj.commit_data = val;
+        all_repo_commit_history.push(temp_obj);
+      });
     }
-    returned_obj = {"user" : req.params.username, "repo" : req.params.repo, "data" : push_data};
-    res.json(returned_obj);
+
+    for (var j = 0; j < all_repo_data.length; j++) {
+      support.get_commits_by_repo(user, all_repo_data[j].name).then(function (val) {
+        var temp_obj = {};
+        temp_obj.repo_info = all_repo_data[j];
+        temp_obj.data = val;
+        all_repo_commit_history.push(temp_obj);
+      }).catch(function (e){
+        console.log("error");
+      });
+    }
+    res.json(all_repo_commit_history);
   });
-});
+}); */
 
 module.exports = router;
