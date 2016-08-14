@@ -32,9 +32,10 @@ class CompareForm extends React.Component {
     const { meta1, meta2 } = this.props;
 
     // Would be fun to have an arc around the avator to show what they are writing in etc.
+    // const r = 125;
     // const arc = d3.arc()
-    //   .innerRadius(125)
-    //   .outerRadius(125 + 5);
+    //   .innerRadius(r)
+    //   .outerRadius(r + 5);
 
     // const pie = d3.pie()
     //   .padAngle(.02);
@@ -46,8 +47,8 @@ class CompareForm extends React.Component {
       <div style={{display: "inline-block", width: "100%", margin: "50px 0"}}>
         <div className="person-left" style={{float:"left", width: "49.75%"}}>
           <div style={{textAlign: "center"}}>
-            {/*<svg style={{width: 300, height: 300}}>
-              {pie(data).map((slice, i) => <path d={arc(slice)} transform={`translate(${300/2},${300/2})`} key={i} fill={"maroon"} />)}
+            {/*<svg style={{width: 2*(r+5), height: 2*(r+5)}}>
+              {pie(data).map((slice, i) => <path d={arc(slice)} transform={`translate(${r+5},${r+5})`} key={i} fill={"maroon"} />)}
             </svg>*/}
             <img src={meta1.avatar_url} style={{borderRadius:"50%", width: "250px", border: "5px solid #CCCCCC"}} />
             <h1>{meta1.name}</h1>
