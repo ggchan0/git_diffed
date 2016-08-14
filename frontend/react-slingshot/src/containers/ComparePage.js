@@ -10,34 +10,30 @@ import ChooseUsersToCompare from '../components/ChooseUsersToCompare';
 
 // Why are props not propogating?
 export const ComparePage = (props) => {
-  const { user1, user2, actions } = props;
-
+  const {meta1, meta2, contributions1, contributions2, actions} = props;
   return (
     <div>
-      <ChooseUsersToCompare
-        user1={user1}
-        user2={user2}
-        actions={actions} />
-      <CompareForm
-        meta1={user1.meta}
-        meta2={user2.meta} />
-      <Contributions
-        contributions1={user1.contributions}
-        contributions2={user2.contributions} />
+      <ChooseUsersToCompare actions={actions}/>
+      <CompareForm meta1={meta1} meta2={meta2}/>
+      <Contributions contributions1={contributions1} contributions2={contributions2}/>
     </div>
   );
 };
 
 ComparePage.propTypes = {
   actions: PropTypes.object.isRequired,
-  user1: PropTypes.object.isRequired,
-  user2: PropTypes.object.isRequired
+  meta1: PropTypes.object.isRequired,
+  meta2: PropTypes.object.isRequired,
+  contributions1: PropTypes.array.isRequired,
+  contributions2: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    user1: state.users[0],
-    user2: state.users[1]
+    meta1: state.users[0].meta,
+    meta2: state.users[1].meta,
+    contributions1: state.users[0].contributions,
+    contributions2: state.users[1].contributions
   };
 }
 

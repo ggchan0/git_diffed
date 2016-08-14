@@ -2,30 +2,35 @@ import * as types from '../constants/actionTypes';
 import { getUser } from '../service.js';
 import Promise from 'bluebird';
 
-function load(userData) {
+function loadUser1(meta) {
+  const jsonMeta = JSON.parse(meta);
   return {
-    type: types.LOAD_USER_1,
-    userData
+    type: types.SEARCH_USER_1,
+    meta: jsonMeta
   };
 }
-export function loadUser1(userName) {
-  return (dispatch) =>
-  {
+
+function loadUser2(meta) {
+  const jsonMeta = JSON.parse(meta);
+  return {
+    type: types.SEARCH_USER_2,
+    meta: jsonMeta
+  };
+}
+
+export function searchUser1(userName) {
+  return function(dispatch)  {
     Promise.resolve(getUser(userName)).then(function(response) {
-      dispatch(load(response));
+      dispatch(loadUser1(response));
     });
   };
 }
 
-
-export function updateSearchUsername(input, userNumber) {
-  return function(dispatch) {
-    dispatch({ type: types.UPDATE_SEARCH_USERNAME_FIELD, input, userNumber });
-  }
-}
-
-export function search(username, userNumber) {
-  return function(dispatch) {
-    dispatch({ type: types.SEARCH, username, userNumber });
-  }
+export function searchUser2(userName) {
+  return (dispatch) =>
+  {
+    Promise.resolve(getUser(userName)).then(function(response) {
+      dispatch(loadUser2(response));
+    });
+  };
 }
