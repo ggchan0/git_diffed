@@ -1,18 +1,23 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React, {PropTypes} from 'react';
 
-const HomePage = () => {
-  return (
-    <div>
-      <h1>React Slingshot</h1>
+class HomePage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  }
 
-      <h2>Get Started</h2>
-      <ol>
-        <li>Review the <Link to="fuel-savings">demo app</Link></li>
-        <li>Remove the demo and start coding: npm run remove-demo</li>
-      </ol>
-    </div>
-  );
+  render() {
+
+    return (
+      <div>
+      </div>
+    );
+  }
+}
+
+HomePage.propTypes = {
+  saveFuelSavings: PropTypes.func,
+  calculateFuelSavings: PropTypes.func,
+  fuelSavings: PropTypes.object
 };
 
 export default HomePage;

@@ -1,17 +1,27 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import * as actions from '../actions/compareActions';
 import CompareForm from '../components/CompareForm';
+import Contributions from '../components/Contributions';
+
 
 export const ComparePage = (props) => {
+  const { user1, user2, actions } = props;
+
   return (
-    <CompareForm
-      loadUser1={props.actions.loadUser1}
-      loadUser2={props.actions.loadUser2}
-      user1={props.user1}
-      user2={props.user2}
-    />
+    <div>
+      <CompareForm
+        loadUser1={actions.loadUser1}
+        loadUser2={actions.loadUser2}
+        user1={user1}
+        user2={user2}
+      />
+      <Contributions
+        contributions1={user1.contributions}
+        contributions2={user2.contributions} />
+    </div>
   );
 };
 
