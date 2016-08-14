@@ -21,10 +21,13 @@ class ContributionLine extends React.Component {
   }
 
   renderDrilldown() {
+    const { personA, personB } = this.props;
     return (
       <div style={{textAlign: "center"}}>
         <p>Distribution of Contributions</p>
-        <img src="../../assets/Commit Distribution 2.png" style={{width: "600px"}} />
+        {personA.additions && personA.subtractions && personB.additions && personB.subtractions ?
+          <img src="../../assets/Commit Distribution 2.png" style={{width: "600px"}} />
+        : <img src="../../assets/Commit Distribution.png" style={{width: "600px"}} /> }
       </div>
     );
   }
