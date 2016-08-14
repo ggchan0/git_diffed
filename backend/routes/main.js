@@ -5,14 +5,14 @@ var unirest = require('unirest');
 var config = require ('.././config/auth');
 
 router.get('/', function(req, res) {
-  //var user = req.params.username;
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
   res.redirect('api/users/' + user);
 });
 
 router.get('/users/:username', function(req, res){
-  //var user = req.params.username;
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user)
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -23,8 +23,8 @@ router.get('/users/:username', function(req, res){
 
 
 router.get('/issues', function(req, res) {
-  //var user = req.params.username
-  var user = "leggechr";
+  var user = req.params.username;
+  //var user = "leggechr";
   unirest.get("https://api.github.com/search/issues?q=type:issue+author:" + user)
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -38,8 +38,8 @@ router.get('/issues', function(req, res) {
 });
 
 router.get('/followers', function(req, res){
-  //var user = req.params.username
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/followers")
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -53,8 +53,8 @@ router.get('/followers', function(req, res){
 });
 
 router.get('/following', function(req, res) {
-  //var user = req.params.username
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/following")
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -68,8 +68,8 @@ router.get('/following', function(req, res) {
 });
 
 router.get('/repos', function(req, res) {
-  //var user = req.params.username;
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/repos")
   .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -83,8 +83,8 @@ router.get('/repos', function(req, res) {
 });
 
 router.get('/recent_pushes_old', function(req, res) {
-  //var user = req.params.username;
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
   unirest.get("https://api.github.com/users/" + user + "/events")
   .headers({'User-Agent' : "ggchan0", 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -128,8 +128,8 @@ function get_events_by_page(page, user) {
 }
 
 router.get('/recent_pushes_new', function(req, res) {
-  //var user = req.params.username;
-  var user = "ggchan0";
+  var user = req.params.username;
+  //var user = "ggchan0";
 
   returned_obj = {};
   returned_obj.commit_count = 0;
@@ -177,10 +177,10 @@ router.get('/recent_pushes_new', function(req, res) {
 });
 
 router.get('/contribution_to_repo', function(req, res) {
-  //var user = req.params.username;
-  //var repo = req.params.repo;
-  var user = "ggchan0";
-  var repo = "git_diffed";
+  var user = req.params.username;
+  var repo = req.params.repo;
+  //var user = "ggchan0";
+  //var repo = "git_diffed";
   unirest.get("https://api.github.com/repos/" + user + "/" + repo + "/stats/contributors")
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -207,8 +207,8 @@ router.get('/contribution_to_repo', function(req, res) {
 });
 
 router.get('/pull_requests', function(req, res) {
-  //var user = req.params.username;
-  var user = "leggechr";
+  var user = req.params.username;
+  //var user = "leggechr";
   unirest.get("https://api.github.com/search/issues?q=type:pr+author:" + user)
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({'user' : config.user, 'pass' : config.pass})
@@ -222,10 +222,10 @@ router.get('/pull_requests', function(req, res) {
 });
 
 router.get('/changes_by_week', function(req, res) {
-  //var user = req.params.username
-  //var repo = req.params.repo
-  var user = "ggchan0";
-  var repo = "git_diffed";
+  var user = req.params.username;
+  var repo = req.params.repo;
+  //var user = "ggchan0";
+  //var repo = "git_diffed";
   unirest.get("https://api.github.com/repos/" + user + "/" + repo + "/stats/code_frequency")
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
@@ -246,10 +246,10 @@ router.get('/changes_by_week', function(req, res) {
 
 
 router.get('/commits_in_repo', function(req, res){
-  //var user = req.params.username
-  //var repo = req.params.repo
-  var user = "ggchan0";
-  var repo = "git_diffed";
+  var user = req.params.username;
+  var repo = req.params.repo;
+  //var user = "ggchan0";
+  //var repo = "git_diffed";
   unirest.get("https://api.github.com/repos/" + user + "/" + repo + "/commits")
   .headers({'User-Agent' : user, 'Content-Type' : 'application/json'})
   .auth({"user" : config.user, "pass" : config.pass})
