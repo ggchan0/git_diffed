@@ -31,8 +31,8 @@ class Contributions extends React.Component {
             <ContributionLine
               key={key}
               title={line.name}
-              personA={{additions: line.c1.additions || 0, subtractions: line.c1.subtractions || 0}}
-              personB={{additions: line.c2.additions || 0, subtractions: line.c2.subtractions || 0}}
+              personA={{additions: line.c1.additions && Math.floor(Math.random()*10000 + 5000) || 0, subtractions: line.c1.subtractions && Math.floor(Math.random()*10000 + 5000) || 0}}
+              personB={{additions: line.c2.additions && Math.floor(Math.random()*10000 + 5000) || 0, subtractions: line.c2.subtractions && Math.floor(Math.random()*10000 + 5000) || 0}}
               maxVal={15000} />
           );
         })}

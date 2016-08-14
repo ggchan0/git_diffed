@@ -5,17 +5,20 @@ import {bindActionCreators} from 'redux';
 import * as actions from '../actions/compareActions';
 import CompareForm from '../components/CompareForm';
 import Contributions from '../components/Contributions';
-import ChooseUsersToCompare from '../components/ChooseUsersToCompare';
+import VerticalBar from '../components/VerticalBar';
 
 
-// Why are props not propogating?
 export const ComparePage = (props) => {
   const {meta1, meta2, contributions1, contributions2, actions} = props;
   return (
     <div>
-      <ChooseUsersToCompare actions={actions}/>
       <CompareForm meta1={meta1} meta2={meta2}/>
-      <Contributions contributions1={contributions1} contributions2={contributions2}/>
+      <Contributions
+        contributions1={contributions1}
+        contributions2={contributions2}
+        actions={actions} />
+      <VerticalBar
+        height={300} />
     </div>
   );
 };

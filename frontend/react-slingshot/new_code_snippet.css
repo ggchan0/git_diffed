@@ -1,0 +1,120 @@
+body {
+    background-color: #EEEEEE;
+}
+
+span {
+    padding-right: 100px;
+}
+
+.header {
+    font-weight: bolder;
+}
+
+img {
+    width=160px;
+    height: 160px;
+    padding-top: 15px;
+}
+
+.contentright {
+    display: block;
+    float: left;
+    position: relative;
+    width: 50%;
+    text-align: center;
+    padding-left: 15px;
+    line-height: 15px;
+    background-color: white;
+    border: solid 5px #EEEEEE;
+    font-family: "Helvetica Neue";
+    font-size: 14pt;
+}
+
+.contentleft {
+    display: block;
+    float: left;
+    position: relative;
+    padding-right: 15px;
+    width: 600px;
+    text-align: center;
+    line-height: 15px;
+    background-color: white;
+    border: solid 5px #EEEEEE;
+    font-family: "Helvetica Neue";
+    font-size: 14pt;
+}
+
+#username {
+    font-size: 11pt;
+    color: grey;
+}
+
+.row {
+    background-color: #9A9694;
+    border: solid white 10px;
+}
+
+.outer {
+    margin: 0 auto;
+    width: 1300px;
+}
+
+textarea {
+    text-align: left;
+    line-height: 15px;
+    border: solid #7FCD66 2px;
+    padding: 5px;
+    font-family: "Courier";
+    font-size: 10pt;
+    overflow: scroll;
+    width: 600px;
+    height: 250px;
+    margin: 5px;
+
+}
+
+#comment {
+    padding-top: 50px;
+    border: solid grey 1px;
+    border-radius: 13px;
+    text-align: left;
+    color: grey;
+    margin: 2px;
+    box-shadow: 3px 3px 3px grey;
+    overflow: scroll;
+}
+
+span {
+    padding-right: 200px;
+}
+
+.header {
+    font-weight: bolder;
+}
+
+.tableleft {
+    display: block;
+    float: left;
+    position: relative;
+    padding-right: 15px;
+    padding-left: 130px;
+    padding-top: 50px;
+    width: 200px;
+    text-align: left;
+    line-height: 15px;
+    font-family: "Avenir";
+    color: #48A245;
+    font-size: 15
+}
+
+.tableright {
+    display: block;
+    float: left;
+    position: relative;
+    padding-right: 15px;
+    padding-top: 50px;
+    width: 200px;
+    text-align: center;
+    line-height: 15px;
+    font-family: "Avenir"
+}

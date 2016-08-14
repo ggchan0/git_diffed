@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { browserHistory } from 'react-router';
 
 class ChooseUsersToCompare extends React.Component {
   constructor(props, context) {
@@ -19,16 +20,19 @@ class ChooseUsersToCompare extends React.Component {
   }
 
   search1(e) {
-    const {value1} = this.state;
-    if (e.keyCode === 13) {
+    const {value1, value2} = this.state;
+    if (e.keyCode === 13 && value2 !== '') {
       this.props.actions.searchUser1(value1);
+      browserHistory.push('/compare');
     }
   }
 
   search2(e) {
-    const {value2} = this.state;
+    const {value1, value2} = this.state;
     if (e.keyCode === 13) {
-      this.props.actions.search(value2);
+      this.props.actions.searchUser1(value1);
+      this.props.actions.searchUser2(value2);
+      browserHistory.push('/compare');
     }
   }
 
@@ -48,12 +52,11 @@ class ChooseUsersToCompare extends React.Component {
           <div style={{textAlign: "center", margin: "300px 0"}}>
             <input
               style={inputStyle}
-              type="text"
+              type="string"
               placeholder="Enter Github Username"
               value={this.state.value1}
               onChange={this.handleChange1}
               onKeyDown={this.search1} />
-
           </div>
         </div>
 

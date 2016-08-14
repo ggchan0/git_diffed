@@ -6,14 +6,21 @@ class CompareForm extends React.Component {
   }
 
   renderSummaryStats(meta) {
+    const order = ["followers", "following", "public_repos", "public_gists"];
     return (
       <div>
         <table style={{margin: "0 auto"}}>
           <tbody>
-            <td><p>{meta.followers}</p></td>
-            <td><p>{meta.following}</p></td>
-            <td><p>{meta.public_repos}</p></td>
-            <td><p>{meta.public_gists}</p></td>
+            {order.map((item, i) => {
+              return (
+                <td key={i}>
+                  <div>
+                    <h3>{meta[item]}</h3>
+                    <p>{item}</p>
+                  </div>
+                </td>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -24,11 +31,12 @@ class CompareForm extends React.Component {
     const { meta1, meta2 } = this.props;
 
     return (
-      <div style={{display: "inline-block", width: "100%", marginBottom: "50px"}}>
+      <div style={{display: "inline-block", width: "100%", margin: "50px 0"}}>
         <div className="person-left" style={{float:"left", width: "49.75%"}}>
           <div style={{textAlign: "center"}}>
             <img src={meta1.avatar_url} style={{borderRadius:"50%", width: "250px", border: "5px solid #CCCCCC"}} />
-            <h1>{meta1.login}</h1>
+            <h1>{meta1.name}</h1>
+            <h2 style={{color: "#666"}}>{meta1.login}</h2>
             {this.renderSummaryStats(meta1)}
           </div>
         </div>
@@ -38,7 +46,8 @@ class CompareForm extends React.Component {
         <div className="person-right" style={{float:"right", width: "49.75%"}}>
           <div style={{textAlign: "center"}}>
             <img src={meta2.avatar_url} style={{borderRadius:"50%", width: "250px", border: "5px solid #CCCCCC"}} />
-            <h1>{meta2.login}</h1>
+            <h1>{meta2.name}</h1>
+            <h2 style={{color: "#666"}}>{meta2.login}</h2>
             {this.renderSummaryStats(meta2)}
           </div>
         </div>
