@@ -17,10 +17,10 @@ class Contributions extends React.Component {
       const c1 = _.find(contributions1, (c1) => c1.id === c.id) || {}; // // returns undefinted if can't find
       const c2 = _.find(contributions2, (c2) => c2.id === c.id) || {};
 
-      return _.assign({}, _.omit(c, ["additions", "subtractions"]), {c1, c2})
-    })
+      return _.assign({}, _.omit(c, ["additions", "subtractions"]), {c1, c2});
+    });
 
-    const maxVal = 0; // Compute this by looking @ contributions
+    //const maxVal = 0; // Compute this by looking @ contributions
 
     // Update person A + B w/ c1, c2 when there is real data
     return (
@@ -31,8 +31,8 @@ class Contributions extends React.Component {
             <ContributionLine
               key={key}
               title={line.name}
-              personA={{additions: Math.floor(10000*Math.random()+5000), subtractions: Math.floor(10000*Math.random()+5000)}}
-              personB={{additions: Math.floor(10000*Math.random()+5000), subtractions: Math.floor(10000*Math.random()+5000)}}
+              personA={{additions: line.c1.additions || 0, subtractions: line.c1.subtractions || 0}}
+              personB={{additions: line.c2.additions || 0, subtractions: line.c2.subtractions || 0}}
               maxVal={15000} />
           );
         })}

@@ -5,52 +5,51 @@ class CompareForm extends React.Component {
     super(props, context);
   }
 
-  render() {
-    const { user1, loadUser1 } = this.props;
-
+  renderSummaryStats(meta) {
     return (
       <div>
-        <h2>Compare Users</h2>
-        <table>
+        <table style={{margin: "0 auto"}}>
           <tbody>
-          <tr>
-            <td><label htmlFor="login">Login</label></td>
-            <td>{user1.login}</td>
-          </tr>
-          <tr>
-            <td><label htmlFor="id">ID</label></td>
-            <td>{user1.id}</td>
-          </tr>
-          <tr>
-            <td><label htmlFor="avatar_url">avatar url</label></td>
-            <td>{user1.avatar_url}
-            </td>
-          </tr>
-          <tr>
-            <td><label htmlFor="followers">followers</label></td>
-            <td>{user1.followers}
-            </td>
-          </tr>
-          <tr>
-            <td><label htmlFor="following">following</label></td>
-            <td>{user1.following}</td>
-          </tr>
+            <td><p>{meta.followers}</p></td>
+            <td><p>{meta.following}</p></td>
+            <td><p>{meta.public_repos}</p></td>
+            <td><p>{meta.public_gists}</p></td>
           </tbody>
         </table>
+      </div>
+    );
+  }
 
-        <hr/>
+  render() {
+    const { meta1, meta2 } = this.props;
 
-        <input type="submit" value="Load User 1" onClick={loadUser1}/>
+    return (
+      <div style={{display: "inline-block", width: "100%", marginBottom: "50px"}}>
+        <div className="person-left" style={{float:"left", width: "49.75%"}}>
+          <div style={{textAlign: "center"}}>
+            <img src={meta1.avatar_url} style={{borderRadius:"50%", width: "250px", border: "5px solid #CCCCCC"}} />
+            <h1>{meta1.login}</h1>
+            {this.renderSummaryStats(meta1)}
+          </div>
+        </div>
+
+        <div style={{float: "left", width: ".5%", height: "450px", background: "gray"}}/>
+
+        <div className="person-right" style={{float:"right", width: "49.75%"}}>
+          <div style={{textAlign: "center"}}>
+            <img src={meta2.avatar_url} style={{borderRadius:"50%", width: "250px", border: "5px solid #CCCCCC"}} />
+            <h1>{meta2.login}</h1>
+            {this.renderSummaryStats(meta2)}
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 CompareForm.propTypes = {
-  loadUser1: PropTypes.func.isRequired,
-  loadUser2: PropTypes.func.isRequired,
-  user1: PropTypes.object.isRequired,
-  user2: PropTypes.object.isRequired
+  meta1: PropTypes.object.isRequired,
+  meta2: PropTypes.object.isRequired
 };
 
 export default CompareForm;

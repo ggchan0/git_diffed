@@ -29,13 +29,17 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "3.4.1",
+    "d3-scale": "1.0.3",
+    "lodash": "4.15.0",
     "object-assign": "4.1.0",
     "react": "15.3.0",
     "react-dom": "15.3.0",
     "react-redux": "4.4.5",
     "react-router": "2.6.1",
     "react-router-redux": "4.0.5",
-    "redux": "3.5.2"
+    "redux": "3.5.2",
+    "redux-thunk": "2.1.0"
   },
   "devDependencies": {
     "autoprefixer": "6.4.0",
