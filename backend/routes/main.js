@@ -87,5 +87,28 @@ router.get('/users/:username', function(req, res){
 });
 
 
+router.get('/users/:username/:repo/commits', function(req, res){
+  unirest.get("https://api.github.com/repos/" + req.params.username + "/" + req.params.repo + "/commits")
+  .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
+  .end(function(response) {
+    var data = response.body;
+    var push_data = [];
+    console.log(data)
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].author.login);
+      if (data[i].author.login != req.params.username) {
+        continue;
+      }
+      var obj = {};
+      obj.sha = data[i].sha;
+      obj.commit_date = data[i].commit.author.date;
+      obj.message = data[i].message;
+      obj.url = data[i].url;
+      push_data.push(obj);
+    }
+    returned_obj = {"user" : req.params.username, "repo" : req.params.repo, "data" : push_data};
+    res.json(returned_obj);
+  });
+});
 
 module.exports = router;
