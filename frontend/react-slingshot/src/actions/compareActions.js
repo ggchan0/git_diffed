@@ -16,3 +16,16 @@ export function loadUser1(userName) {
     });
   };
 }
+
+
+export function updateSearchUsername(input, userNumber) {
+  return function(dispatch) {
+    dispatch({ type: types.UPDATE_SEARCH_USERNAME_FIELD, input, userNumber });
+  }
+}
+
+export function search(username, userNumber) {
+  return function(dispatch) {
+    dispatch({ type: types.SEARCH, username, userNumber });
+  }
+}
