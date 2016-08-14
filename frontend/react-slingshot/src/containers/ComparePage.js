@@ -14,8 +14,7 @@ export const ComparePage = (props) => {
     <div>
       <CompareForm
         meta1={user1.meta}
-        meta2={user2.meta}
-      />
+        meta2={user2.meta} />
       <Contributions
         contributions1={user1.contributions}
         contributions2={user2.contributions} />
