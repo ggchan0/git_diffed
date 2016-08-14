@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
 
 class CompareForm extends React.Component {
   constructor(props, context) {
@@ -32,14 +32,14 @@ class CompareForm extends React.Component {
     const { meta1, meta2 } = this.props;
 
     // Would be fun to have an arc around the avator to show what they are writing in etc.
-    const arc = d3.arc()
-      .innerRadius(125)
-      .outerRadius(125 + 5);
+    // const arc = d3.arc()
+    //   .innerRadius(125)
+    //   .outerRadius(125 + 5);
 
-    const pie = d3.pie()
-      .padAngle(.02);
+    // const pie = d3.pie()
+    //   .padAngle(.02);
 
-    const data = [12, 32, 15, 21];
+    // const data = [12, 32, 15, 21];
 
 
     return (
