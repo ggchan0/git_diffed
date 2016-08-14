@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { browserHistory } from 'react-router'
 
 class ChooseUsersToCompare extends React.Component {
   constructor(props, context) {
@@ -8,30 +9,36 @@ class ChooseUsersToCompare extends React.Component {
     this.updateSearchUsername2 = this.updateSearchUsername2.bind(this);
     this.search1 = this.search1.bind(this);
     this.search2 = this.search2.bind(this);
+
+    this.state = {
+      searchUsername1: "",
+      searchUsername2: ""
+    };
   }
 
   updateSearchUsername1(event) {
-    this.props.actions.updateSearchUsername(event.target.value, 0);
+    this.setState({searchUsername1: event.target.value});
   }
 
   updateSearchUsername2(event) {
-    this.props.actions.updateSearchUsername(event.target.value, 1);
+    this.setState({searchUsername2: event.target.value});
   }
 
   search1(e) {
     if (e.keyCode === 13) {
-      this.props.actions.search(this.props.user1.searchUsername, 0);
+      //this.props.actions.search(this.state.searchUsername1, 0);
+      browserHistory.push('/compare');
     }
   }
 
   search2(e) {
     if (e.keyCode === 13) {
-      this.props.actions.search(this.props.user2.searchUsername, 1);
+      //this.props.actions.search(this.state.searchUsername2, 1);
+      browserHistory.push('/compare');
     }
   }
 
   render() {
-    const { user1, user2 } = this.props;
     const inputStyle = {
       padding: "12px 20px",
       margin: "8px 0",
@@ -47,12 +54,11 @@ class ChooseUsersToCompare extends React.Component {
           <div style={{textAlign: "center", margin: "300px 0"}}>
             <input
               style={inputStyle}
-              type="text"
+              type="string"
               placeholder="Enter Github Username"
-              value={user1.searchUsername}
+              value={this.state.searchUsername1}
               onChange={this.updateSearchUsername1}
               onKeyDown={this.search1} />
-
           </div>
         </div>
 
@@ -64,7 +70,7 @@ class ChooseUsersToCompare extends React.Component {
               style={inputStyle}
               type="text"
               placeholder="Enter Github Username"
-              value={user2.searchUsername}
+              value={this.state.searchUsername2}
               onChange={this.updateSearchUsername2}
               onKeyDown={this.search2} />
           </div>
