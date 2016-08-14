@@ -23,7 +23,8 @@ class ContributionLine extends React.Component {
   renderDrilldown() {
     return (
       <div style={{textAlign: "center"}}>
-        <img src="../../assets/Commit Distribution.png" style={{width: "450px"}} />
+        <p>Distribution of Contributions</p>
+        <img src="../../assets/Commit Distribution 2.png" style={{width: "600px"}} />
       </div>
     );
   }
@@ -32,8 +33,8 @@ class ContributionLine extends React.Component {
     const { title, personA, personB, maxVal } = this.props;
     const svgWidth = window.innerWidth/4;
 
-    const showCountA = personA.additions && personA.subtractions;
-    const showCountB = personB.additions && personB.subtractions;
+    const showCountA = personA.additions || personA.subtractions;
+    const showCountB = personB.additions || personB.subtractions;
 
     const x = scaleLinear()
       .domain([0, maxVal])

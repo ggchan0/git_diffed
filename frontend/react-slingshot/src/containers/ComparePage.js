@@ -19,7 +19,8 @@ export const ComparePage = (props) => {
         meta2={user2.meta} />
       <Contributions
         contributions1={user1.contributions}
-        contributions2={user2.contributions} />
+        contributions2={user2.contributions}
+        actions={actions} />
       <VerticalBar
         height={300} />
     </div>

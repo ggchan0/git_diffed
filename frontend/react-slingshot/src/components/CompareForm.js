@@ -31,7 +31,7 @@ class CompareForm extends React.Component {
     const { meta1, meta2 } = this.props;
 
     return (
-      <div style={{display: "inline-block", width: "100%", marginBottom: "50px"}}>
+      <div style={{display: "inline-block", width: "100%", margin: "50px 0"}}>
         <div className="person-left" style={{float:"left", width: "49.75%"}}>
           <div style={{textAlign: "center"}}>
             <img src={meta1.avatar_url} style={{borderRadius:"50%", width: "250px", border: "5px solid #CCCCCC"}} />
