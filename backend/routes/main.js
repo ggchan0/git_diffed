@@ -5,32 +5,45 @@ var unirest = require('unirest');
 var pretty_json = require('prettyjson');
 
 router.get('/', function(req, res) {
-  var count = get_number_of_issues("ggchan0");
-  var obj = {"total_issues" : count};
-  console.log(obj);
-  res.json(obj);
+  var promise = new Promise(
+    function (resolve, reject) {
+      var data = get_number_of_issues("ggchan0");
+      setTimeout(function() {
+        resolve(data);
+      }, 5000);
+    }
+  );
+  promise.then(function(data){
+    var obj = {"total_issues" : data};
+    console.log(obj);
+    res.json(obj);
+  })
+  .catch(function(reason){
+    console.log("ERROR");
+    console.log(reason);
+  });
 });
 
-function get_number_of_issues(user) {
-  var data;
-  unirest.get("https://api.github.com/search/issues?q=author:" + user)
+router.get('/number_of_issues', function(req, res) {
+  unirest.get("https://api.github.com/search/issues?q=author:" + "ggchan0")
   .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
   .end(function(response) {
-    console.log(response["raw_body"]);
-    var total = JSON.parse(response["raw_body"]).total_count;
-    data = total;
+    var total = JSON.parse(response.raw_body).total_count;
+    var obj = {"total_issues" : total};
+    res.json(obj);
   });
-  console.log(data);
-  return data;
-}
+});
 
-function get_number_of_followers(user) {
-  unirest.get("https://api.github.com/users/" + user + "/followers")
+router.get('/number_of_followers', function(req, res){
+  unirest.get("https://api.github.com/users/" + "ggchan0" + "/followers")
   .headers({'User-Agent' : 'ggchan0', 'Content-Type' : 'application/json'})
   .end(function(response) {
-    return response.length;
+    var total = JSON.parse(response.raw_body).length;
+    console.log(total);
+    var obj = {"total_followers" : total};
+    res.json(obj);
   });
-}
+});
 
 function get_commits_by_user(user) {
 
