@@ -1,39 +1,37 @@
 import React, {PropTypes} from 'react';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
 
 class ChooseUsersToCompare extends React.Component {
   constructor(props, context) {
     super(props, context);
-
-    this.updateSearchUsername1 = this.updateSearchUsername1.bind(this);
-    this.updateSearchUsername2 = this.updateSearchUsername2.bind(this);
+    this.state = {value1: '', value2: ''};
+    this.handleChange1 = this.handleChange1.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
     this.search1 = this.search1.bind(this);
     this.search2 = this.search2.bind(this);
-
-    this.state = {
-      searchUsername1: "",
-      searchUsername2: ""
-    };
   }
 
-  updateSearchUsername1(event) {
-    this.setState({searchUsername1: event.target.value});
+  handleChange1(event) {
+    this.setState({value1: event.target.value});
   }
 
-  updateSearchUsername2(event) {
-    this.setState({searchUsername2: event.target.value});
+  handleChange2(event) {
+    this.setState({value2: event.target.value});
   }
 
   search1(e) {
-    if (e.keyCode === 13) {
-      //this.props.actions.search(this.state.searchUsername1, 0);
+    const {value1, value2} = this.state;
+    if (e.keyCode === 13 && value2 !== '') {
+      this.props.actions.searchUser1(value1);
       browserHistory.push('/compare');
     }
   }
 
   search2(e) {
+    const {value1, value2} = this.state;
     if (e.keyCode === 13) {
-      //this.props.actions.search(this.state.searchUsername2, 1);
+      this.props.actions.searchUser1(value1);
+      this.props.actions.searchUser2(value2);
       browserHistory.push('/compare');
     }
   }
@@ -56,8 +54,8 @@ class ChooseUsersToCompare extends React.Component {
               style={inputStyle}
               type="string"
               placeholder="Enter Github Username"
-              value={this.state.searchUsername1}
-              onChange={this.updateSearchUsername1}
+              value={this.state.value1}
+              onChange={this.handleChange1}
               onKeyDown={this.search1} />
           </div>
         </div>
@@ -70,8 +68,8 @@ class ChooseUsersToCompare extends React.Component {
               style={inputStyle}
               type="text"
               placeholder="Enter Github Username"
-              value={this.state.searchUsername2}
-              onChange={this.updateSearchUsername2}
+              value={this.state.value2}
+              onChange={this.handleChange2}
               onKeyDown={this.search2} />
           </div>
         </div>
@@ -81,8 +79,6 @@ class ChooseUsersToCompare extends React.Component {
 }
 
 ChooseUsersToCompare.propTypes = {
-  user1: PropTypes.object.isRequired,
-  user2: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 

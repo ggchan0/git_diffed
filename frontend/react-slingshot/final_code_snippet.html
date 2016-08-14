@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+
+<link rel="stylesheet" href="final_code_snippet.css">
+
+<head>
+    <title> Code Snippet </title>
+
+</head>
+
+
+<body>
+
+    <div>
+        <div class="outer">
+            <div class="contentleft">
+                <img src="github%20anon.png">
+
+                <p>Pauline Smith</p>
+
+                <p id="username"> @pauline </p>
+
+
+
+                <textarea>
+import Foundation
+import CoreGraphics
+
+/// Chart that draws bars.
+public class BarChartView: BarLineChartViewBase, BarChartDataProvider
+{
+    /// flag that enables or disables the highlighting arrow
+    private var _drawHighlightArrowEnabled = false
+    
+    /// if set to true, all values are drawn above their bars, instead of below their top
+    private var _drawValueAboveBarEnabled = true
+
+    /// if set to true, a grey area is drawn behind each bar that indicates the maximum value
+    private var _drawBarShadowEnabled = false
+    
+    internal override func initialize()
+    {
+        super.initialize()
+        
+        renderer = BarChartRenderer(dataProvider: self, animator: _animator, viewPortHandler: _viewPortHandler)
+        _xAxisRenderer = ChartXAxisRendererBarChart(viewPortHandler: _viewPortHandler, xAxis: _xAxis, transformer: _leftAxisTransformer, chart: self)
+        
+        self.highlighter = BarChartHighlighter(chart: self)
+        
+        _xAxis._axisMinimum = -0.5
+    }
+                </textarea>
+
+
+                <p id="comment"> No Comments </p>
+
+                <div class="tableleft">
+
+                    <p>
+                        <strong> Project </strong>
+                    </p>
+                    <p>
+                        <strong> Language </strong>
+                    </p>
+                    <p>
+                        <strong> IDE </strong>
+                    </p>
+                    <p>
+                        <strong> Date Created </strong>
+                    </p>
+                    <p>
+                        <strong> Date Modified </strong>
+                    </p>
+
+                </div>
+
+                <div class="tableright">
+
+                    <p>IOS Application</p>
+                    <p>Swift</p>
+                    <p>Xcode</p>
+                    <p>8/2/16</p>
+                    <p>8/16/16</p>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="contentright">
+                <img src="github%20anon.png">
+
+                <p>Joe Baker</p>
+                <p id="username"> @joeb </p>
+
+
+
+                <textarea>
+import Foundation
+import CoreGraphics
+
+
+public class ChartBaseDataSet: NSObject, IChartDataSet
+{
+    public required override init()
+    {
+        super.init()
+        
+        // default color
+        colors.append(NSUIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0))
+        valueColors.append(NSUIColor.blackColor())
+    }
+    
+    public init(label: String?)
+    {
+        super.init()
+        
+        // default color
+        colors.append(NSUIColor(red: 140.0/255.0, green: 234.0/255.0, blue: 255.0/255.0, alpha: 1.0))
+        valueColors.append(NSUIColor.blackColor())
+
+                </textarea>
+
+
+                <p id="comment"> No Comments </p>
+
+                <div class="tableleft">
+
+                    <p>
+                        <strong> Project </strong>
+                    </p>
+                    <p>
+                        <strong> Language </strong>
+                    </p>
+                    <p>
+                        <strong> IDE </strong>
+                    </p>
+                    <p>
+                        <strong> Date Created </strong>
+                    </p>
+                    <p>
+                        <strong> Date Modified </strong>
+                    </p>
+
+                </div>
+
+                <div class="tableright">
+
+                    <p>IOS Application</p>
+                    <p>Swift</p>
+                    <p>Eclipse</p>
+                    <p>3/7/14</p>
+                    <p>3/12/14</p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
