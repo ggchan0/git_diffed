@@ -13,10 +13,8 @@ export const ComparePage = (props) => {
   return (
     <div>
       <CompareForm
-        loadUser1={actions.loadUser1}
-        loadUser2={actions.loadUser2}
-        user1={user1}
-        user2={user2}
+        meta1={user1.meta}
+        meta2={user2.meta}
       />
       <Contributions
         contributions1={user1.contributions}
