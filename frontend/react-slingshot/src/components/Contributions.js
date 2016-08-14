@@ -17,8 +17,8 @@ class Contributions extends React.Component {
       const c1 = _.find(contributions1, (c1) => c1.id === c.id) || {}; // // returns undefinted if can't find
       const c2 = _.find(contributions2, (c2) => c2.id === c.id) || {};
 
-      return _.assign({}, _.omit(c, ["additions", "subtractions"]), {c1, c2})
-    })
+      return _.assign({}, _.omit(c, ["additions", "subtractions"]), {c1, c2});
+    });
 
     const maxVal = 0; // Compute this by looking @ contributions
 

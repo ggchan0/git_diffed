@@ -3,10 +3,16 @@ import React, {PropTypes} from 'react';
 class CompareForm extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.load = this.load.bind(this);
+  }
+
+  load() {
+    const { user1, loadUser1 } = this.props;
+    loadUser1(user1.login);
   }
 
   render() {
-    const { user1, loadUser1 } = this.props;
+    const { user1 } = this.props;
 
     return (
       <div>
@@ -40,7 +46,7 @@ class CompareForm extends React.Component {
 
         <hr/>
 
-        <input type="submit" value="Load User 1" onClick={loadUser1}/>
+        <input type="submit" value="Load User 1" onClick={this.load}/>
       </div>
     );
   }

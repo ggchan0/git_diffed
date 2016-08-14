@@ -14,7 +14,6 @@ export const ComparePage = (props) => {
     <div>
       <CompareForm
         loadUser1={actions.loadUser1}
-        loadUser2={actions.loadUser2}
         user1={user1}
         user2={user2}
       />
